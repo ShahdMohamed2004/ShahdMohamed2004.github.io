@@ -417,3 +417,59 @@ html{
 @media (prefers-reduced-motion:reduce){
   .mobile-menu,.menu-backdrop{transition:none;}
 }
+
+/* ---------- dark mobile drawer correction: layer above floating controls ---------- */
+@media (max-width:767px){
+  /* The drawer must sit above the back-to-top control and never be covered by it. */
+  .menu-backdrop{z-index:210;}
+  .mobile-menu{z-index:220;}
+  body.menu-open .back-to-top,
+  body.menu-open .scroll-progress,
+  body.menu-open .where-am-i{
+    opacity:0 !important;
+    visibility:hidden !important;
+    pointer-events:none !important;
+  }
+
+  /* Keep the last controls fully inside the panel's scrollable content. */
+  .mobile-menu{
+    padding-bottom:max(34px, calc(24px + env(safe-area-inset-bottom)));
+    scroll-padding-block-end:24px;
+  }
+  .mobile-menu-utility .theme-toggle-mobile,
+  .mobile-menu-utility .lang-toggle-mobile{position:relative;z-index:1;}
+
+  /* Explicit dark-mode surface values prevent the drawer from blending into the page. */
+  html:not([data-theme="light"]) .mobile-menu{
+    background:#132722;
+    border-color:rgba(210,231,220,.22);
+    box-shadow:0 20px 55px rgba(0,0,0,.46),0 0 0 1px rgba(231,184,78,.06) inset;
+    color:#eef4ed;
+  }
+  html:not([data-theme="light"]) .mobile-menu>a{
+    background:rgba(225,239,231,.055);
+    border-color:rgba(225,239,231,.075);
+    color:#eef4ed;
+  }
+  html:not([data-theme="light"]) .mobile-menu>a:hover,
+  html:not([data-theme="light"]) .mobile-menu>a:focus-visible{
+    background:rgba(231,184,78,.12);
+    border-color:rgba(231,184,78,.48);
+    color:#fff7dd;
+  }
+  html:not([data-theme="light"]) .mobile-menu-utility{
+    border-top-color:rgba(225,239,231,.18);
+  }
+  html:not([data-theme="light"]) .mobile-menu-utility>a,
+  html:not([data-theme="light"]) .mobile-menu-utility .lang-toggle-mobile,
+  html:not([data-theme="light"]) .mobile-menu-utility .theme-toggle-mobile{
+    background:rgba(225,239,231,.07);
+    border-color:rgba(225,239,231,.20);
+    color:#e7eee8;
+  }
+  html:not([data-theme="light"]) .mobile-menu-close{
+    background:#172f29;
+    border-color:rgba(225,239,231,.26);
+    color:#e7eee8;
+  }
+}
