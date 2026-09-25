@@ -209,3 +209,96 @@ html[dir="rtl"] .section-head::before{grid-column:1;}
 html[dir="rtl"] .project-details{margin-left:0;margin-right:76px;}
 html[dir="rtl"] .project-details-body{border-left:0;border-right:1px solid var(--lab-line);}
 @media (max-width:680px){html[dir="rtl"] .project-details{margin-right:0;}html[dir="rtl"] .project-details-body{border-right:0;}}
+/* ---------- final responsive polish: breathing room + lightweight motion ---------- */
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:clamp(84px, 12vw, 108px);
+}
+
+/* Keep the floating section rail comfortably away from the viewport edge. */
+@media (min-width:981px){
+  .side-rail{
+    inset-inline-end:clamp(20px, 3vw, 46px);
+    gap:16px;
+    padding:10px 8px;
+    max-height:calc(100vh - 48px);
+  }
+  .side-rail::before{inset-inline-end:4px;}
+  .side-rail::after{inset-inline-end:2px;}
+}
+
+/* A real mobile gutter: nothing should touch or get clipped by the screen edge. */
+@media (max-width:767px){
+  html,body{scroll-behavior:smooth;}
+  main.wrap{padding-inline:clamp(20px, 6vw, 28px) !important;}
+  main.wrap>section{padding-inline:0 !important;}
+  header nav{padding-inline:clamp(16px, 5vw, 24px);}
+  footer{padding-inline:clamp(20px, 6vw, 28px);}
+
+  /* Cards and long rows stay inside the gutter even with Arabic or long URLs. */
+  .credential-strip,.cta-row,.contact-links,.work-toolbar,.work-filters,
+  .about-grid,.section-head,.grid-4,#howITeachGrid,.materials-grid,.dev-grid,
+  .spine,.contact-box{min-width:0;max-width:100%;}
+  .work-filters{scrollbar-width:none;}
+  .work-filters::-webkit-scrollbar{display:none;}
+
+  /* The drawer is a calm floating panel instead of an edge-to-edge slab. */
+  .mobile-menu{
+    inset-block:12px;
+    inset-inline-end:12px;
+    inset-inline-start:auto;
+    width:min(390px, calc(100% - 24px));
+    max-width:none;
+    height:auto;
+    max-height:calc(100dvh - 24px);
+    padding:82px clamp(22px, 6vw, 30px) max(24px, env(safe-area-inset-bottom));
+    border:1px solid color-mix(in srgb, var(--line-strong) 82%, transparent);
+    border-radius:24px;
+    box-shadow:0 20px 60px rgba(0,0,0,.24);
+    background:color-mix(in srgb, var(--ink-2) 94%, transparent);
+    backdrop-filter:blur(10px) !important;
+    -webkit-backdrop-filter:blur(10px) !important;
+    overscroll-behavior:contain;
+    scrollbar-gutter:auto;
+    transform:translate3d(calc(100% + 20px),0,0);
+    transition:transform .42s cubic-bezier(.22,.8,.24,1), opacity .3s ease;
+    opacity:.96;
+  }
+  .mobile-menu.open{transform:translate3d(0,0,0);}
+  html[dir="rtl"] .mobile-menu{
+    inset-inline-start:12px;
+    inset-inline-end:auto;
+    transform:translate3d(calc(-100% - 20px),0,0);
+  }
+  html[dir="rtl"] .mobile-menu.open{transform:translate3d(0,0,0);}
+  .mobile-menu-close{inset-block-start:20px;inset-inline-start:20px;}
+  html[dir="rtl"] .mobile-menu-close{inset-inline-start:auto;inset-inline-end:20px;}
+  .mobile-menu>a{padding-block:7px;}
+  .mobile-menu-utility{padding-top:20px;}
+
+  /* Keep reveal motion elegant but inexpensive on touch devices. */
+  .mobile-menu a{animation-duration:.3s;}
+  body::after,main.wrap::before{display:none;}
+  .hero::after{filter:none;animation:none;}
+}
+
+@media (max-width:380px){
+  main.wrap{padding-inline:20px !important;}
+  header nav{padding-inline:16px;}
+  .mobile-menu{inset-inline:8px auto;width:calc(100% - 16px);padding-inline:20px;}
+  html[dir="rtl"] .mobile-menu{inset-inline:8px  auto;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html,body{scroll-behavior:auto;}
+  .mobile-menu{transition:none;}
+}
+
+@media (hover:none) and (pointer:coarse){
+  .side-rail{display:none;}
+  *{scrollbar-width:thin;}
+}
+
+/* Ensure the drawer never creates a horizontal scroll path. */
+.mobile-menu,.mobile-menu *{max-width:100%;}
+.mobile-menu-utility,.mobile-social-dock{min-width:0;}
