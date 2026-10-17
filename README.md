@@ -17,7 +17,7 @@ Then open `http://localhost:4173/`.
 - `og-image.png` — social sharing preview image.
 - `manifest.webmanifest`, `robots.txt`, `sitemap.xml` — installability and search metadata.
 
-The canonical deployment is the GitHub Pages site: https://shahdmohamed2004.github.io/portfolio/
+The active production site is deployed on GitHub Pages: https://shahdmohamed2004.github.io/
 
 ## Versioning and UX pass
 
